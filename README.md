@@ -6,3 +6,8 @@
 > Short description: Project focuses on UI/UX of a weather forecast API. 
 
 > Long description (Serbian): [PDF](project_description_serbian.pdf)
+
+## Technologies
+
+- Frontend: Vue.js + Vuex + Vuetify
+- Backend: Weather forecast API
