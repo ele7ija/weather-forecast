@@ -10,4 +10,11 @@
 ## Technologies
 
 - Frontend: Vue.js + Vuex + Vuetify
-- Backend: Weather forecast API
+- Backend: [Weather forecast API](openweathermap.org)
+
+## How to run the project
+
+1. Get an [API key](openweathermap.org) and put it in a .env.local file in the form:
+> APIKEY=xxx
+
+2. Run `npm run serve` (Node.js is required) in the [frontend root folder](./weather-forecast-frontend)
