@@ -3,6 +3,8 @@ import Vuex from 'vuex'
 import App from './App.vue'
 import 'es6-promise/auto'
 import store from './store'
+import vuetify from './plugins/vuetify';
+import router from './router';
 
 Vue.config.productionTip = false
 
@@ -10,8 +12,9 @@ Vue.use(Vuex)
 
 new Vue({
   render: h => h(App),
-  // root store injection, access by this.$store
   store,
+  router,
+  vuetify
 }).$mount('#app')
 
 
