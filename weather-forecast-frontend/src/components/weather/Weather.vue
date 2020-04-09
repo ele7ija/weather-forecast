@@ -4,35 +4,23 @@
       <v-row dense>
         <v-col
           v-for="card in cards"
-          :key="card.title"
-          :cols="card.flex"
+          :key="card.id"
+          :cols='3'
         >
-          <v-card>
-            <v-img
-              :src="card.src"
-              class="white--text align-end"
-              gradient="to bottom, rgba(0,0,0,.1), rgba(0,0,0,.5)"
-              height="200px"
-            >
-              <v-card-title v-text="card.title"></v-card-title>
-            </v-img>
-
-            <v-card-actions>
-              <v-spacer></v-spacer>
-
-              <v-btn icon>
-                <v-icon>mdi-heart</v-icon>
-              </v-btn>
-
-              <v-btn icon>
-                <v-icon>mdi-bookmark</v-icon>
-              </v-btn>
-
-              <v-btn icon>
-                <v-icon>mdi-share-variant</v-icon>
-              </v-btn>
-            </v-card-actions>
-          </v-card>
+          <v-scroll-y-transition>
+            <SearchCard 
+              v-if='card.type==="search"'
+              v-show='show'
+              v-bind:card='card'>
+            </SearchCard>
+          </v-scroll-y-transition>
+          <v-scroll-x-transition>
+            <ViewCard
+              v-if='card.type==="view"'
+              v-show='show'
+              v-bind:card='card'>
+            </ViewCard>
+          </v-scroll-x-transition>
         </v-col>
       </v-row>
     </v-container>
@@ -40,15 +28,39 @@
 </template>
 
 <script>
+import { mapGetters, mapState } from 'vuex';
+import SearchCard from '@/components/weather/cards/SearchCard'
+import ViewCard from '@/components/weather/cards/ViewCard'
+
+
 export default {
   name: 'Weather',
+  components: {
+    SearchCard,
+    ViewCard
+  },
   data: () => ({
-    cards: [
+    tcards: [
       { title: 'Pre-fab homes', src: 'https://cdn.vuetifyjs.com/images/cards/house.jpg', flex: 12 },
       { title: 'Favorite road trips', src: 'https://cdn.vuetifyjs.com/images/cards/road.jpg', flex: 6 },
       { title: 'Best airlines', src: 'https://cdn.vuetifyjs.com/images/cards/plane.jpg', flex: 6 },
-    ]
-  })
+    ],
+    show: false
+  }),
+  computed: {
+    ...mapState({
+      cards: state => state.weather.cards
+    })
+  },
+  methods: {
+    ...mapGetters({
+      getCards: 'weather/getCards'
+    })
+  },
+  created() {
+    // Animacije
+    setTimeout(() => this.show=true, 200)
+  }
 }
 </script>
 
