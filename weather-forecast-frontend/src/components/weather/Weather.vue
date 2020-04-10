@@ -8,7 +8,7 @@
           :cols='3'
         >
           <v-scroll-y-transition>
-            <SearchCard 
+            <SearchCard
               v-if='card.type==="search"'
               v-show='show'
               v-bind:card='card'>

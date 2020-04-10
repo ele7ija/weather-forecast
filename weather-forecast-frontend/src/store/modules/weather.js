@@ -27,10 +27,18 @@ const mutations = {
     state.weather = newWeather
   },
   addCard(state, payload) {
-    state.cards.unshift({
+    let newCard = {
       type: payload.type,
       location: payload.location 
-    })
+    };
+    if (state.cards.length==1){
+      state.cards.unshift(newCard);
+      return;
+    }
+    if (state.cards.length==0){
+      console.log('Error while adding a new card');
+    }
+    state.cards.splice(state.cards.length-1, 0, newCard);
   }
 }
 
