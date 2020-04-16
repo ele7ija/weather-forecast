@@ -2,10 +2,9 @@ import owm from '../../api/owm';
 
 const state = {
   count: 0,
-  weather: NaN,
   cards: [{
     id: 0,
-    type: 'search',  // Allowed card types: search, preview, view
+    type: 'search',  // Allowed card types: search, view
     title: 'Location search'
   }]
 }
@@ -21,24 +20,15 @@ const getters = {
 
 // synchronous
 const mutations = {
-  increment: state => state.count++,
-  decrement: state => state.count--,
-  setWeather(state, newWeather) {
-    state.weather = newWeather
-  },
   addCard(state, payload) {
-    let newCard = {
-      type: payload.type,
-      location: payload.location 
-    };
     if (state.cards.length==1){
-      state.cards.unshift(newCard);
+      state.cards.unshift(payload);
       return;
     }
     if (state.cards.length==0){
       console.log('Error while adding a new card');
     }
-    state.cards.splice(state.cards.length-1, 0, newCard);
+    state.cards.splice(state.cards.length-1, 0, payload);
   }
 }
 

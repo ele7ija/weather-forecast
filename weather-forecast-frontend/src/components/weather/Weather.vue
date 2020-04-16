@@ -5,7 +5,10 @@
         <v-col
           v-for="card in cards"
           :key="card.id"
-          :cols='3'
+          :cols='12'
+          lg='2'
+          md='3'
+          sm='6'
         >
           <v-scroll-y-transition>
             <SearchCard
@@ -40,11 +43,6 @@ export default {
     ViewCard
   },
   data: () => ({
-    tcards: [
-      { title: 'Pre-fab homes', src: 'https://cdn.vuetifyjs.com/images/cards/house.jpg', flex: 12 },
-      { title: 'Favorite road trips', src: 'https://cdn.vuetifyjs.com/images/cards/road.jpg', flex: 6 },
-      { title: 'Best airlines', src: 'https://cdn.vuetifyjs.com/images/cards/plane.jpg', flex: 6 },
-    ],
     show: false
   }),
   computed: {
