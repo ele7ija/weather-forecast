@@ -1,4 +1,3 @@
-import owm from '../../api/owm';
 
 const state = {
   count: 0,
@@ -34,13 +33,6 @@ const mutations = {
 
 // asynchronous
 const actions = {
-  getCurrentWeather ({commit}, cityId){
-    owm.getCurrentWeather(
-      cityId,
-      (newWeather) => commit('setWeather', newWeather),
-      (error) => console.log(error)
-    )
-  }
 }
 
 export default {

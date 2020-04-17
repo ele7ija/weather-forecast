@@ -42,14 +42,14 @@
 
 <script>
 import {mapMutations} from 'vuex';
-import axios from 'axios'
+import owm from '@/api/owm';
+
 
 export default {
   name: 'SearchCard',
   props: ['card'],
   data: function(){
     return {
-      validSearch: true,
       formattedAddress: {latitude: '', longitude: ''},
       weather: null
     }
@@ -68,7 +68,6 @@ export default {
     }),
     getAddressData: function (formattedData) {
       this.formattedAddress = formattedData;
-      console.log(this.formattedAddress)
       this.setUpPreview();
     },
     setUpPreview() {
@@ -81,10 +80,8 @@ export default {
       if (latitude == '' || longitude == ''){
         return;
       }
-      const response = await axios.get(`https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&units=metric&APPID=${process.env.VUE_APP_APIKEY}`)
-      this.weather = response.data;
-      console.log(response.data)
-
+      const data = await owm.getCurrentWeather(latitude, longitude);
+      this.weather = data;
     }
   },
 }
