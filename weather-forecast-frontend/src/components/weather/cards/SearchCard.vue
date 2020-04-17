@@ -16,20 +16,22 @@
       </v-form>
       <template v-if='weather!==null'>
         <v-img
-          :src='formattedAddress.photos[0].getUrl()'>
+          :src='formattedAddress.photos[0].getUrl()'
+          :alt='formattedAddress.name'
+          width="200"
+          height="150"
+          gradient="to bottom, rgba(0,0,0,.1), rgba(0,0,0,.5)"
+          class="align-end">
+          <v-card-title 
+            class="white--text">
+            {{currDescription}}&nbsp;{{currWeather}}&deg;C
+          </v-card-title>
         </v-img>
-        <v-text-field
-        v-model='weatherText'
-        disabled>
-      </v-text-field>
       </template>
     </v-card-text>
     <v-card-actions class="justify-center">
       <v-btn  
-        @click='addCard(
-          {type: "view", 
-          address: formattedAddress, 
-          weather: weather})' 
+        @click='addCardReset' 
         class="mx-2" 
         fab 
         dark color="#1a6919">
@@ -44,7 +46,6 @@
 import {mapMutations} from 'vuex';
 import owm from '@/api/owm';
 
-
 export default {
   name: 'SearchCard',
   props: ['card'],
@@ -55,11 +56,17 @@ export default {
     }
   },
   computed: {
-    weatherText: function() {
+    currWeather: function() {
       if (this.weather === null){
         return '';
       }
-      return this.weather.main.temp;
+      return this.weather.main.temp.toFixed(1);
+    },
+    currDescription: function() {
+      if (this.weather === null){
+        return '';
+      }
+      return this.weather.weather[0].main;
     }
   },
   methods: {
@@ -82,6 +89,14 @@ export default {
       }
       const data = await owm.getCurrentWeather(latitude, longitude);
       this.weather = data;
+    },
+    addCardReset() {
+      this.addCard({
+        type: "view", 
+        address: this.formattedAddress, 
+        weather: this.weather
+      });
+      this.weather = null;
     }
   },
 }
