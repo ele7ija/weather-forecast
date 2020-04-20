@@ -1,29 +1,62 @@
 <template>
   <div>
-    <v-container fluid>
+    <v-container fluid class='pt-0'>
       <v-row dense>
+        <!-- CARDS -->
         <v-col
-          v-for="card in cards"
-          :key="card.id"
-          :cols='12'
-          lg='2'
-          md='3'
-          sm='6'
-        >
-          <v-scroll-y-transition>
-            <SearchCard
-              v-if='card.type==="search"'
-              v-show='show'
-              v-bind:card='card'>
-            </SearchCard>
-          </v-scroll-y-transition>
-          <v-scroll-x-transition>
-            <ViewCard
-              v-if='card.type==="view"'
-              v-show='show'
-              v-bind:card='card'>
-            </ViewCard>
-          </v-scroll-x-transition>
+          lg=6
+          md=6
+          sm=12>
+          <v-row dense>
+            <v-col
+              v-for="card in cards"
+              :key="card.id"
+              lg='3'
+              md='4'
+              sm='6'>
+              <v-scroll-y-transition
+                v-if='card.type==="search"'>
+                <SearchCard
+                  v-show='show'
+                  v-bind:card='card'>
+                </SearchCard>
+              </v-scroll-y-transition>
+              <v-scroll-x-transition
+                v-if='card.type==="view"'>
+                <ViewCard
+                  v-show='show'
+                  v-bind:card='card'>
+                </ViewCard>
+              </v-scroll-x-transition>
+            </v-col>
+          </v-row>
+        </v-col>
+        <!-- GRAPH -->
+        <v-col
+          lg=6
+          md=6
+          sm=12>
+          <v-container class='pa-0'>
+            <v-row dense justify='center'>
+              <v-col lg=11 md=11 sm=12>
+                <v-card>
+                  <v-card-text>
+                    Time and value picker
+                  </v-card-text>
+                </v-card>
+              </v-col>
+            </v-row>
+            <v-row dense justify='center'>
+              <v-col lg=11 md=11 sm=12>
+                <v-card>
+                  <v-card-text>
+                    <Graph>
+                    </Graph>
+                  </v-card-text>
+                </v-card>
+              </v-col>
+            </v-row>
+          </v-container>
         </v-col>
       </v-row>
     </v-container>
@@ -34,13 +67,15 @@
 import { mapGetters, mapState } from 'vuex';
 import SearchCard from '@/components/weather/cards/SearchCard'
 import ViewCard from '@/components/weather/cards/ViewCard'
+import Graph from '@/components/weather/graph/Graph'
 
 
 export default {
   name: 'Weather',
   components: {
     SearchCard,
-    ViewCard
+    ViewCard,
+    Graph
   },
   data: () => ({
     show: false

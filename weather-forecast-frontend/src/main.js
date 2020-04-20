@@ -7,6 +7,7 @@ import vuetify from './plugins/vuetify';
 import router from './router';
 import VuetifyGoogleAutocomplete from 'vuetify-google-autocomplete';
 import Vuetify from 'vuetify'
+
 Vue.use(Vuetify)
 
 Vue.config.productionTip = false

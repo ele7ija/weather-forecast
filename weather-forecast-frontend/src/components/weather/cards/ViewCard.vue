@@ -2,27 +2,29 @@
   <v-card>
     <v-img
       :src='card.address.photos[0].getUrl()'
-      gradient="to bottom, rgba(0,0,0,.1), rgba(0,0,0,.5)"
-      class="align-end">
+      gradient="to bottom, rgba(0,0,0,.1), rgba(0,0,0,.6)"
+      class="align-end"
+      height=150>
       <v-card-title 
         v-text="title"
-        class="white--text">
+        class="white--text subtitle-1 font-weight-medium pb-3">
       </v-card-title>
       <v-card-subtitle 
         v-text="subtitle"
-        class="white--text">
+        class="white--text caption pb-2">
       </v-card-subtitle>
     </v-img>
-    <v-card-text>
+    <v-card-text class="pt-3 pb-1">
       <!-- ICON DEGREES MIN/MAX --> 
       <v-row align="center" no-gutters>
-        <v-col class="display-1 pl-3" cols="9">
+        <v-col class="headline pl-2" cols="8">
           {{currWeather.main.temp.toFixed(1)}}&deg;C
         </v-col>
-        <v-col cols="3">
+        <v-col cols="4">
           <v-img
             :src="'http://openweathermap.org/img/w/' + iconcode + '.png'"
             alt="Weather image"
+            width=40
           ></v-img>
         </v-col>
         
@@ -42,41 +44,54 @@
         -->
       </v-row>
       <!--  --> 
-      <v-container fluid class='pt-0'>
+      <v-container fluid class='pt-0 pb-1'>
       
       <v-row>
-        <v-col cols='7' class='font-weight-medium subtitle-2 pb-0 pt-1'>
+        <v-col cols='7' class='font-weight-medium caption pa-0 pt-1'>
           Air pressure:</v-col>
-        <v-col cols='5' class='font-weight-black subtitle-2 pb-0 pr-0 pt-1'>
+        <v-col cols='5' class='font-weight-black caption pa-0 pt-1 pl-1'>
           {{Math.round(currWeather.main.pressure)}} hPa
         </v-col>
       </v-row>
       <v-row>
-        <v-col cols='7' class='font-weight-medium subtitle-2 pb-0'>
+        <v-col cols='7' class='font-weight-medium caption pa-0 pt-1'>
           Humidity:
         </v-col>
-        <v-col cols='5' class='font-weight-black subtitle-2 pb-0'>
+        <v-col cols='5' class='font-weight-black caption pa-0 pt-1 pl-1'>
           {{Math.round(currWeather.main.humidity)}} %
         </v-col>
       </v-row>
       <v-row>
-        <v-col cols='7' class='font-weight-medium subtitle-2 pb-0'>
+        <v-col cols='7' class='font-weight-medium caption pa-0 pt-1'>
           Visibility:
         </v-col>
-        <v-col cols='5' class='font-weight-black subtitle-2 pb-0'>
+        <v-col cols='5' class='font-weight-black caption pa-0 pt-1 pl-1'>
           {{Math.round(currWeather.visibility)}} m
         </v-col>
       </v-row>
       <v-row>
-        <v-col cols='7' class='font-weight-medium subtitle-2 pb-0'>
+        <v-col cols='7' class='font-weight-medium caption pa-0 pt-1'>
           Wind:
         </v-col>
-        <v-col cols='5' class='font-weight-black subtitle-2 pb-0'>
+        <v-col cols='5' class='font-weight-black caption pa-0 pt-1 pl-1'>
           {{Math.round(currWeather.wind.speed)}} m/s
         </v-col>
       </v-row>
       </v-container>
+      
+      <!-- AKCIJE -->
+      <v-card-actions class="pl-0 pr-0 pt-1">
+        <v-btn text class='overline pa-0'>Forecast table</v-btn>
+        <v-spacer></v-spacer>
+        <v-btn icon class='pa-0'><v-icon small>mdi-delete</v-icon></v-btn>
+        
+    </v-card-actions>
 
+    <v-expand-transition>
+      <div v-show="show">
+        <v-divider></v-divider>  
+      </div>
+    </v-expand-transition>
     </v-card-text>
   </v-card>
 </template>
@@ -90,7 +105,26 @@ export default {
   data: function() {
     return {
       min_temp: '',
-      max_temp: ''
+      max_temp: '',
+      // Chart data
+      chartData: [
+        ["Hour", "Sales"],
+        ["3h", 1000],
+        ["6h", 1170],
+        ["9h", 660],
+        ["12h", 1030]
+      ],
+      chartOptions: {
+        title: "Temperature forecast",
+        curveType: 'function',
+        chartArea: {height: '70%', width: '90%'},
+        height: '200',
+        width: '200',
+        vAxis:{
+          textStyle: {color: 'red'},
+          format: '#'
+        },
+      }
     }
   },
   computed: {

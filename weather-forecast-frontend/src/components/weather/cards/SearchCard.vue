@@ -1,6 +1,7 @@
 <template>
   <v-card>
-    <v-card-title v-text="card.title"></v-card-title>
+    <v-card-title class="subtitle-1 font-weight-medium" v-text="card.title"></v-card-title>
+    <v-divider></v-divider>
     <v-card-text>
       <v-form
         v-on:submit.prevent="setUpPreview">
@@ -90,11 +91,19 @@ export default {
       const data = await owm.getCurrentWeather(latitude, longitude);
       this.weather = data;
     },
-    addCardReset() {
+    async addCardReset() {
+      let latitude = this.formattedAddress.latitude;
+      let longitude = this.formattedAddress.longitude;
+      if (latitude == '' || longitude == ''){
+        return;
+      }
+      const data = await owm.getForecast(latitude, longitude);
+      console.log(data);
       this.addCard({
         type: "view", 
         address: this.formattedAddress, 
-        weather: this.weather
+        weather: this.weather,
+        forecast: data
       });
       this.weather = null;
     }
