@@ -7,7 +7,7 @@
       :expand-on-hover="expandOnHover"
       :mini-variant="miniVariant"
       :right="right"
-      :src="bg"
+      src='@/assets/img/sidebar.jpg'
       absolute
       dark
       :clipped='clipped'
@@ -48,36 +48,34 @@
       color="primary"
       dark
       clipped-left
+      dense
     >
-      <div class="d-flex align-center">
-        <v-img
+      <div class="d-flex align-center font-weight-light">
+        <!-- <v-img
           alt="Vuetify Logo"
           class="shrink mr-2"
           contain
           src="https://cdn.vuetifyjs.com/images/logos/vuetify-logo-dark.png"
           transition="scale-transition"
           width="40"
-        />
-
-        <v-img
+        /> -->
+        OpenWeatherMaps API client v1.0
+        <!-- <v-img
           alt="Vuetify Name"
           class="shrink mt-1 hidden-sm-and-down"
           contain
           min-width="100"
           src="https://cdn.vuetifyjs.com/images/logos/vuetify-name-dark.png"
           width="100"
-        />
+        /> -->
       </div>
 
       <v-spacer></v-spacer>
-
-      <v-btn
-        href="https://github.com/vuetifyjs/vuetify/releases/latest"
-        target="_blank"
-        text
-      >
-        <span class="mr-2">Latest Release</span>
-        <v-icon>mdi-open-in-new</v-icon>
+      <v-btn 
+        href='https://gitlab.com/bpoprzen/weather-forecast' 
+        icon
+        target="_blank">
+        <v-icon>mdi-github</v-icon>
       </v-btn>
     </v-app-bar>
 
@@ -106,10 +104,5 @@ export default {
     background: true,
     clipped: true
   }),
-  computed: {
-    bg () {
-      return this.background ? 'https://cdn.vuetifyjs.com/images/backgrounds/bg-2.jpg' : undefined
-    },
-  },
 };
 </script>

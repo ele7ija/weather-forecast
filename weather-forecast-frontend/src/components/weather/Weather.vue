@@ -41,7 +41,8 @@
               <v-col lg=11 md=11 sm=12>
                 <v-card>
                   <v-card-text>
-                    Time and value picker
+                    <GraphSelectors>
+                    </GraphSelectors>
                   </v-card-text>
                 </v-card>
               </v-col>
@@ -68,6 +69,7 @@ import { mapGetters, mapState } from 'vuex';
 import SearchCard from '@/components/weather/cards/SearchCard'
 import ViewCard from '@/components/weather/cards/ViewCard'
 import Graph from '@/components/weather/graph/Graph'
+import GraphSelectors from './graph/GraphSelectors'
 
 
 export default {
@@ -75,7 +77,8 @@ export default {
   components: {
     SearchCard,
     ViewCard,
-    Graph
+    Graph,
+    GraphSelectors
   },
   data: () => ({
     show: false

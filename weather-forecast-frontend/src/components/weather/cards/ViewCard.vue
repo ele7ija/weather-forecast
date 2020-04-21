@@ -81,50 +81,44 @@
       
       <!-- AKCIJE -->
       <v-card-actions class="pl-0 pr-0 pt-1">
-        <v-btn text class='overline pa-0'>Forecast table</v-btn>
+        <v-btn 
+          text 
+          class='overline pa-0'
+          @click.stop='dialog=true'>
+          Forecast table
+        </v-btn>
+        <ForecastDialog
+          v-bind:card='card'
+          v-bind:dialog='dialog'
+          @update-dialog='dialog=false'>
+        </ForecastDialog>
         <v-spacer></v-spacer>
-        <v-btn icon class='pa-0'><v-icon small>mdi-delete</v-icon></v-btn>
+        <v-btn 
+          icon 
+          class='pa-0'
+          @click='removeCard(card.id)'><v-icon small>mdi-delete</v-icon></v-btn>
         
     </v-card-actions>
 
     <v-expand-transition>
-      <div v-show="show">
-        <v-divider></v-divider>  
-      </div>
     </v-expand-transition>
     </v-card-text>
   </v-card>
 </template>
 
 <script>
-// import owm from '@/api/owm';
+import { mapMutations } from 'vuex';
+import ForecastDialog from './ForecastDialog';
 
 export default {
   name: 'ViewCard',
   props: ['card'],
+  components: { ForecastDialog },
   data: function() {
     return {
       min_temp: '',
       max_temp: '',
-      // Chart data
-      chartData: [
-        ["Hour", "Sales"],
-        ["3h", 1000],
-        ["6h", 1170],
-        ["9h", 660],
-        ["12h", 1030]
-      ],
-      chartOptions: {
-        title: "Temperature forecast",
-        curveType: 'function',
-        chartArea: {height: '70%', width: '90%'},
-        height: '200',
-        width: '200',
-        vAxis:{
-          textStyle: {color: 'red'},
-          format: '#'
-        },
-      }
+      dialog: false
     }
   },
   computed: {
@@ -149,6 +143,11 @@ export default {
     currWeather: function() {
       return this.card.weather;
     }
+  },
+  methods: {
+    ...mapMutations('weather', [
+      'removeCard'
+    ])
   },
   created() {
     console.log(this.card)

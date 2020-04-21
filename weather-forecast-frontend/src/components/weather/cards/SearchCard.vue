@@ -7,6 +7,7 @@
         v-on:submit.prevent="setUpPreview">
         <vuetify-google-autocomplete
           id='map'
+          ref='map'
           v-bind:disable='true'
           placeholder="Location"
           v-on:placechanged="getAddressData"
@@ -15,27 +16,26 @@
             'formatted_address', 'photos']}">
         </vuetify-google-autocomplete>
       </v-form>
-      <template v-if='weather!==null'>
-        <v-img
+       </v-card-text>
+        <v-img v-if='weather!==null'
           :src='formattedAddress.photos[0].getUrl()'
           :alt='formattedAddress.name'
-          width="200"
-          height="150"
-          gradient="to bottom, rgba(0,0,0,.1), rgba(0,0,0,.5)"
-          class="align-end">
-          <v-card-title 
-            class="white--text">
-            {{currDescription}}&nbsp;{{currWeather}}&deg;C
-          </v-card-title>
+          height="120"
+          gradient="to bottom, rgba(0,0,0,.1), rgba(0,0,0,.9)"
+          class="align-end justify-end">
+          <div 
+            class="white--text subtitle-1 font-weight-medium pa-2">
+            {{currDescription}},&nbsp;{{currWeather}}&deg;C
+          </div>
         </v-img>
-      </template>
-    </v-card-text>
+   
     <v-card-actions class="justify-center">
       <v-btn  
         @click='addCardReset' 
         class="mx-2" 
         fab 
-        dark color="#1a6919">
+        color="primary"
+        dark>
         <v-icon dark>mdi-plus</v-icon>
       </v-btn>
 
@@ -106,6 +106,7 @@ export default {
         forecast: data
       });
       this.weather = null;
+      this.$refs.map.clear()
     }
   },
 }
