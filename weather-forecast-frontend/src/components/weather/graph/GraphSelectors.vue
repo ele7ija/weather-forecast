@@ -13,7 +13,7 @@
           outlined
         >
           <template v-slot:selection="{ item }">
-            <v-chip>
+            <v-chip color='accent'>
               <span>{{ item }}</span>
             </v-chip>
           </template>
@@ -39,7 +39,7 @@
             >(+{{ model.length - 1 }} others)</span>
           </template>
         </v-select> -->
-        <v-menu
+        <!-- <v-menu
           v-model="menu"
           :close-on-content-click="false"
           :nudge-right="40"
@@ -62,7 +62,17 @@
             :min='minDate'
             :max="maxDate"
             ></v-date-picker>
-        </v-menu>
+        </v-menu> -->
+         <v-slider
+          v-model="internalTimeframe"
+          label="Days"
+          thumb-color="accent"
+          thumb-label="always"
+          :thumb-size="24"
+          min='1'
+          :max='timeframes'
+          class='pt-4'
+        ></v-slider>
       </v-col>
     </v-row>
   </v-container>
@@ -76,14 +86,32 @@ export default {
   data: () => ({
     menu: false,
     date: '',
+    intTimeframe: 5
   }),
   computed: {
+    ...mapState('weather', [
+      'weatherAspects',
+      'timeframes',
+    ]),
     selectedWeatherAspect: {
       get() {
         return this.$store.state.weather.selectedWeatherAspect;
       },
       set(value) {
         this.$store.commit('weather/setSelectedWeatherAspect', value)
+      }
+    },
+    internalTimeframe: {
+      get() {
+        return this.intTimeframe;
+      },
+      set(value) {
+        let today = new Date();
+        let advance = new Date();
+        advance.setDate(today.getDate() + value);
+        console.log(advance);
+        this.$store.commit('weather/setSelectedTimeframe', advance.toISOString())
+        this.intTimeframe = value;
       }
     },
     selectedTimeframe: {
@@ -104,10 +132,6 @@ export default {
       let today = new Date();
       return today.toISOString();
     },
-    ...mapState('weather', [
-      'weatherAspects',
-      'timeframes',
-    ]),
   },
   methods: {
     ...mapMutations('weather', [
@@ -126,5 +150,12 @@ export default {
 }
    .v-text-field {
      padding: 0
+   }
+   .v-messages {
+       display: none;
+   }
+
+   .v-input__slot{
+     margin: 0
    }
 </style>

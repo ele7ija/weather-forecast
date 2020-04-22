@@ -6,10 +6,10 @@ const state = {
     title: 'Location search'
   }],
   idcounter: 0,
-  timeframes: ['3h', '6h', '9h', '12h'],
+  timeframes: 5,
   selectedTimeframe: '',
   weatherAspects: ['Temperature', 'Air pressure', 'Humidity', 'Windiness'],
-  selectedWeatherAspect: ''
+  selectedWeatherAspect: 'Temperature'
 }
 
 const getters = {

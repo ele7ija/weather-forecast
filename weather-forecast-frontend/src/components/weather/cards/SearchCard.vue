@@ -35,7 +35,8 @@
         class="mx-2" 
         fab 
         color="primary"
-        dark>
+        dark
+        medium>
         <v-icon dark>mdi-plus</v-icon>
       </v-btn>
 
