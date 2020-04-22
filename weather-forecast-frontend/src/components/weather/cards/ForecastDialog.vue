@@ -43,8 +43,15 @@ export default {
     ]),
     forecast: function() {
       let retval = [];
+      let offset = this.card.forecast.city.timezone - 7200;
+      let maxDate = new Date(this.selectedTimeframe);
+      maxDate.setHours(23);
+      maxDate.setMinutes(59);
       for (let measurement of this.card.forecast.list){
-        let newdate = new Date(measurement.dt * 1000);
+        let newdate = new Date((measurement.dt + offset) * 1000);
+        if (newdate > maxDate) {
+          continue;
+        }
         retval.push({
           time: newdate.toLocaleString(),
           t: measurement.main.temp,

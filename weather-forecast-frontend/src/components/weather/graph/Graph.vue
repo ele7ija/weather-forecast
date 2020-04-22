@@ -25,41 +25,49 @@
         'selectedTimeframe'
       ]),
       generatedData: function() {
+        var o = Math.round, r = Math.random, s = 255;
+        let maxDate = new Date(this.selectedTimeframe);
+        maxDate.setHours(23);
+        maxDate.setMinutes(59);
         let retval = {
           datasets: []
         };
-        var o = Math.round, r = Math.random, s = 255;
         for (let card of this.getCards()) {
           if (card.type !== 'view'){
             continue;
           }
           let measurements = [];
+          let offset = card.forecast.city.timezone - 7200;
           for (let measurement of card.forecast.list){
+            let date = new Date((measurement.dt + offset) * 1000);
+            if (date > maxDate) {
+              continue;
+            }
             if (this.selectedWeatherAspect === 'Temperature') {
               measurements.push({
                 yAxisID: 'Temperature',
-                x: new Date(measurement.dt * 1000),
+                x: date,
                 y: measurement.main.temp
               })
             }
             if (this.selectedWeatherAspect === 'Air pressure') {
               measurements.push({
                 yAxisID: 'Air pressure',
-                x: new Date(measurement.dt * 1000),
+                x: date,
                 y: measurement.main.pressure
               })
             }
             if (this.selectedWeatherAspect === 'Windiness') {
               measurements.push({
                 yAxisID: 'Windiness',
-                x: new Date(measurement.dt * 1000),
+                x: date,
                 y: measurement.wind.speed
               })
             }
             if (this.selectedWeatherAspect === 'Humidity') {
               measurements.push({
                 yAxisID: 'Humidity',
-                x: new Date(measurement.dt * 1000),
+                x: date,
                 y: measurement.main.humidity
               })
             }
@@ -81,8 +89,16 @@
                 type: 'time',
                 time: {
                   unit: 'hour',
-                  stepSize: 1
-                }
+                  unitStepSize: 3,
+                  // round: 'day'                                                                                                                                                                            
+                  tooltipFormat: 'YYYY-MM-DD HH:mm',
+                  displayFormats: {
+                    millisecond: 'HH:mm:ss.SSS',
+                    second: 'HH:mm:ss',
+                    minute: 'HH:mm',
+                    hour: 'HH:00'
+                  }
+                },
             }],
             yAxes: []
           },

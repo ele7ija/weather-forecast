@@ -127,12 +127,14 @@ export default {
         this.card.address.country;
     },
     subtitle: function() {
-      let date = new Date(this.card.weather.dt * 1000);
+      let date = new Date(
+        (this.card.weather.dt + this.card.weather.timezone - 7200)
+         * 1000);
       let days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']
       let finalString = days[date.getDay()];
-      var hours = date.getHours();
+      var hours = "0" + date.getHours();
       var minutes = "0" + date.getMinutes();
-      var formattedTime = hours + ':' + minutes.substr(-2);
+      var formattedTime = hours.substr(-2) + ':' + minutes.substr(-2);
       finalString += ', ' + formattedTime;
       finalString += ' ' + this.card.weather.weather[0].main;
       return finalString

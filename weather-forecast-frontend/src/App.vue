@@ -13,9 +13,8 @@
       :clipped='clipped'
     >
       <v-list
-        dense
         nav
-        class="py-0"
+        class="py-0 pt-2"
       >
         <v-divider></v-divider>
         <v-tooltip right
@@ -77,6 +76,9 @@
         target="_blank">
         <v-icon>mdi-github</v-icon>
       </v-btn>
+      <!-- <v-btn icon>
+        <v-icon>src='@/assets/img/sidebar.jpg'</v-icon>
+      </v-btn> -->
     </v-app-bar>
 
     <v-content>

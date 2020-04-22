@@ -10,6 +10,7 @@
           v-model="selectedWeatherAspect"
           :items="weatherAspects"
           label="Weather data"
+          outlined
         >
           <template v-slot:selection="{ item }">
             <v-chip>
@@ -23,7 +24,7 @@
         md=6
         sm=12
         class='pa-0 pr-3 pl-6'>
-        <v-select
+        <!-- <v-select
           v-model="selectedTimeframe"
           :items="timeframes"
           label="Time frame"
@@ -37,7 +38,31 @@
               class="grey--text caption"
             >(+{{ model.length - 1 }} others)</span>
           </template>
-        </v-select>
+        </v-select> -->
+        <v-menu
+          v-model="menu"
+          :close-on-content-click="false"
+          :nudge-right="40"
+          transition="scale-transition"
+          offset-y
+        >
+          <template v-slot:activator="{ on }">
+            <v-text-field
+              v-model="selectedTimeframe"
+              label="Time frame"
+              append-icon="mdi-calendar"
+              readonly
+              v-on="on"
+              outlined
+            ></v-text-field>
+          </template>
+          <v-date-picker 
+            v-model="selectedTimeframe" 
+            @input="menu = false"
+            :min='minDate'
+            :max="maxDate"
+            ></v-date-picker>
+        </v-menu>
       </v-col>
     </v-row>
   </v-container>
@@ -49,6 +74,8 @@ import { mapState, mapMutations } from 'vuex'
 export default {
   name: 'GraphSelectors',
   data: () => ({
+    menu: false,
+    date: '',
   }),
   computed: {
     selectedWeatherAspect: {
@@ -67,6 +94,16 @@ export default {
         this.$store.commit('weather/setSelectedTimeframe', value)
       }
     },
+    maxDate: function() {
+      let today = new Date();
+      let fiveAdvance = new Date();
+      fiveAdvance.setDate(today.getDate() + 5);
+      return fiveAdvance.toISOString();
+    },
+    minDate: function() {
+      let today = new Date();
+      return today.toISOString();
+    },
     ...mapState('weather', [
       'weatherAspects',
       'timeframes',
@@ -76,7 +113,9 @@ export default {
     ...mapMutations('weather', [
       'setSelectedTimeframe',
       'setSelectedWeatherAspect'
-    ])
+    ]),
+    allowedDates: val => parseInt(val.split('-')[2], 10) % 2 === 0,
+
   }
 }
 </script>
