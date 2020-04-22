@@ -5,7 +5,27 @@
     <v-col>
       <v-card>
         <v-card-title>
-          Forecast (3-hour): {{card.address.name + ', ' + card.address.country}}
+          <v-row>
+          <v-col align-self='end' lg=7 md=7 sm=7 xs=12 class='pl-6'>
+            Forecast (3-hour): {{card.address.name + ', ' + card.address.country}}
+          </v-col>
+          <v-col class='pr-8' lg=5 md=5 sm=5 xs=12>
+            <v-card outlined>
+          <v-card-text>  
+          <v-slider
+          v-model="internalTimeframe"
+          label="Days"
+          thumb-color="accent"
+          thumb-label="always"
+          :thumb-size="24"
+          min='1'
+          :max='timeframes'
+          class='pt-4'>
+          </v-slider>
+          </v-card-text>
+          </v-card>
+          </v-col>
+          </v-row>
         </v-card-title>
       <v-card-text>
         <v-data-table
@@ -21,7 +41,7 @@
 </template>
 
 <script>
-import {mapState} from 'vuex';
+import {mapState, mapMutations} from 'vuex';
 
 export default {
   name: 'ForecastDialog',
@@ -41,10 +61,24 @@ export default {
       'timeframes',
       'selectedTimeframe'
     ]),
+    internalTimeframe: {
+      get() {
+        return this.$store.state.weather.selectedTimeframe;
+      },
+      set(value) {
+        this.setSelectedTimeframe(value)
+        // let today = new Date();
+        // let advance = new Date();
+        // advance.setDate(today.getDate() + value);
+        // this.$store.commit('weather/setSelectedTimeframe', advance.toISOString())
+        // this.intTimeframe = value;
+      }
+    },
     forecast: function() {
       let retval = [];
       let offset = this.card.forecast.city.timezone - 7200;
-      let maxDate = new Date(this.selectedTimeframe);
+      let maxDate = new Date();
+      maxDate.setDate(new Date().getDate() + this.selectedTimeframe);
       maxDate.setHours(23);
       maxDate.setMinutes(59);
       for (let measurement of this.card.forecast.list){
@@ -96,7 +130,11 @@ export default {
     },
     close () {
       this.$emit('update-dialog', false)
-    }
+    },
+    ...mapMutations('weather', [
+      'setSelectedTimeframe',
+      'setSelectedWeatherAspect'
+    ]),
   }
 }
 </script>

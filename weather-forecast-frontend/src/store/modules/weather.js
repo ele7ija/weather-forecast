@@ -7,7 +7,7 @@ const state = {
   }],
   idcounter: 0,
   timeframes: 5,
-  selectedTimeframe: '',
+  selectedTimeframe: 5,
   weatherAspects: ['Temperature', 'Air pressure', 'Humidity', 'Windiness'],
   selectedWeatherAspect: 'Temperature'
 }

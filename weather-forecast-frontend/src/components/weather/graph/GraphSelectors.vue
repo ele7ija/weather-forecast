@@ -63,6 +63,7 @@
             :max="maxDate"
             ></v-date-picker>
         </v-menu> -->
+        
          <v-slider
           v-model="internalTimeframe"
           label="Days"
@@ -103,23 +104,16 @@ export default {
     },
     internalTimeframe: {
       get() {
-        return this.intTimeframe;
-      },
-      set(value) {
-        let today = new Date();
-        let advance = new Date();
-        advance.setDate(today.getDate() + value);
-        console.log(advance);
-        this.$store.commit('weather/setSelectedTimeframe', advance.toISOString())
-        this.intTimeframe = value;
-      }
-    },
-    selectedTimeframe: {
-      get() {
         return this.$store.state.weather.selectedTimeframe;
       },
       set(value) {
-        this.$store.commit('weather/setSelectedTimeframe', value)
+        this.setSelectedTimeframe(value)
+        // this.intTimeframe = value;
+        // let today = new Date();
+        // let advance = new Date();
+        // advance.setDate(today.getDate() + value);
+        // console.log(advance);
+        
       }
     },
     maxDate: function() {

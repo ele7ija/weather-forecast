@@ -26,7 +26,8 @@
       ]),
       generatedData: function() {
         var o = Math.round, r = Math.random, s = 255;
-        let maxDate = new Date(this.selectedTimeframe);
+        let maxDate = new Date();
+        maxDate.setDate(new Date().getDate() + this.selectedTimeframe);
         maxDate.setHours(23);
         maxDate.setMinutes(59);
         let retval = {
