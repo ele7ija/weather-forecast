@@ -9,7 +9,7 @@
 
 ## Technologies
 
-- Frontend: Vue.js + Vuex + Vuetify
+- Frontend: Vue.js; Vuex; Vuetify; Vue router; vue-chartjs (Chart.js wrapper)
 - Backend: [Weather forecast API](openweathermap.org)
 
 ## How to run the project
