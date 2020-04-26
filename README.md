@@ -14,10 +14,11 @@
 
 ## How to run the project
 
-1. Get an **OpenWeatherMap** [API key](openweathermap.org) and put it in a .env.local file in the form:
+Run `npm run serve` (Node.js is required) in the [frontend root folder](./weather-forecast-frontend)
+
+Instructions below are deprecated. Dummy API keys are now public.
+>1. Get an **OpenWeatherMap** [API key](openweathermap.org) and put it in a .env.local file in the form:
 > VUE_APP_APIKEY=\<yourkey>
 
-1. Get a **Google places** [API key](https://developers.google.com/places/web-service/intro?hl=en) and put it in a .env.local file in the form:
+>2. Get a **Google places** [API key](https://developers.google.com/places/web-service/intro?hl=en) and put it in a .env.local file in the form:
 > VUE_APP_GOOGLE_APIKEY=\<yourkey>
-
-3. Run `npm run serve` (Node.js is required) in the [frontend root folder](./weather-forecast-frontend)
