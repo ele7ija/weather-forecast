@@ -7,11 +7,11 @@
       height=150>
       <v-card-title 
         v-text="title"
-        class="white--text subtitle-1 font-weight-medium pb-3">
+        :class="classes">
       </v-card-title>
       <v-card-subtitle 
         v-text="subtitle"
-        class="white--text caption pb-2">
+        class='white--text pb-2 caption'>
       </v-card-subtitle>
     </v-img>
     <v-card-text class="pt-3 pb-1">
@@ -66,7 +66,9 @@
           Visibility:
         </v-col>
         <v-col cols='5' class='font-weight-black caption pa-0 pt-1 pl-1'>
-          {{Math.round(currWeather.visibility)}} m
+          {{currWeather.visibility == undefined ? 
+            '--' :
+            Math.round(currWeather.visibility)}} m
         </v-col>
       </v-row>
       <v-row>
@@ -122,6 +124,16 @@ export default {
     }
   },
   computed: {
+    classes: function() {
+      let retval = 'white--text font-weight-medium pb-3'
+      if (this.title.length <= 18) {
+        return retval += ' ' + 'subtitle-1'; 
+      }
+      if (this.title.length <= 22) {
+        return retval += ' ' + 'subtitle-2'
+      }
+      return retval += ' ' + 'caption'
+    },
     title: function(){
       return this.card.address.name + ', ' + 
         this.card.address.country;

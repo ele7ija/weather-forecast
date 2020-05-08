@@ -1,7 +1,8 @@
 <template>
     <v-dialog
     v-model='$_dialog'
-    width="unset">
+    width="unset"
+    @keypress.esc='$_dialog=false'>
     <v-col>
       <v-card>
         <v-card-title>

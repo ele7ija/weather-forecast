@@ -11,6 +11,7 @@
             <v-col
               v-for="card in cards"
               :key="card.id"
+              cols='6'
               lg='3'
               md='4'
               sm='6'>

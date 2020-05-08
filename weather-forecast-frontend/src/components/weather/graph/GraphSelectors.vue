@@ -4,7 +4,7 @@
       <v-col
         lg=6
         md=6
-        sm=12
+        sm=6
         class='pa-0 pl-3 pr-6'>
         <v-select
           v-model="selectedWeatherAspect"
@@ -22,7 +22,7 @@
       <v-col
         lg=6
         md=6
-        sm=12
+        sm=6
         class='pa-0 pr-3 pl-6'>
         <!-- <v-select
           v-model="selectedTimeframe"
